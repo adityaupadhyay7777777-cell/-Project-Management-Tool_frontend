@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus - Project Management Tool</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>Nexus</h2>
+      </div>
+      <div class="sidebar-menu">
+        <h3>Projects</h3>
+        <ul id="project-list">
+          <!-- Projects injected here -->
+        </ul>
+        <button id="btn-new-project" class="btn-primary">+ New Project</button>
+      </div>
+      <div class="sidebar-footer">
+        <p id="user-info">Logged in as: <span></span></p>
+        <button id="btn-logout" class="btn-secondary">Logout</button>
+      </div>
+    </aside>
+    
+    <main class="main-content">
+      <header class="topbar">
+        <h1 id="current-project-title">Select a Project</h1>
+        <div class="topbar-actions">
+          <button id="btn-add-task" class="btn-primary" style="display: none;">+ Add Task</button>
+        </div>
+      </header>
+      
+      <div class="board-container" id="board-container" style="display: none;">
+        <!-- Todo Column -->
+        <div class="board-column" data-status="Todo">
+          <div class="column-header">
+            <h3>To Do</h3>
+            <span class="task-count">0</span>
+          </div>
+          <div class="task-list" id="list-todo">
+            <!-- Tasks injected here -->
+          </div>
+        </div>
+
+        <!-- In Progress Column -->
+        <div class="board-column" data-status="In Progress">
+          <div class="column-header">
+            <h3>In Progress</h3>
+            <span class="task-count">0</span>
+          </div>
+          <div class="task-list" id="list-in-progress">
+          </div>
+        </div>
+
+        <!-- Done Column -->
+        <div class="board-column" data-status="Done">
+          <div class="column-header">
+            <h3>Done</h3>
+            <span class="task-count">0</span>
+          </div>
+          <div class="task-list" id="list-done">
+          </div>
+        </div>
+      </div>
+
+      <!-- Welcome Screen -->
+      <div class="welcome-screen" id="welcome-screen">
+        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=400&q=80" alt="Team Work">
+        <h2>Welcome to Nexus</h2>
+        <p>Select a project from the sidebar or create a new one to get started.</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modals -->
+  <div class="modal-overlay" id="modal-project" style="display:none;">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Create Project</h3>
+        <button class="close-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="text" id="project-name" placeholder="Project Name" class="input-field">
+        <textarea id="project-desc" placeholder="Project Description" class="input-field"></textarea>
+        <button id="submit-project" class="btn-primary full-width">Create</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-task" style="display:none;">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Add Task</h3>
+        <button class="close-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="text" id="task-title" placeholder="Task Title" class="input-field">
+        <textarea id="task-desc" placeholder="Task Description" class="input-field"></textarea>
+        <select id="task-assignee" class="input-field">
+          <option value="">Unassigned</option>
+          <!-- Users injected here -->
+        </select>
+        <button id="submit-task" class="btn-primary full-width">Add Task</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Task Detail Modal -->
+  <div class="modal-overlay" id="modal-task-detail" style="display:none;">
+    <div class="modal modal-large">
+      <div class="modal-header">
+        <h3 id="detail-task-title">Task Title</h3>
+        <button class="close-modal">&times;</button>
+      </div>
+      <div class="modal-body task-detail-layout">
+        <div class="task-detail-main">
+          <div class="task-section">
+            <h4>Description</h4>
+            <p id="detail-task-desc">Task description goes here...</p>
+          </div>
+          <div class="task-section comments-section">
+            <h4>Comments</h4>
+            <div id="comments-list" class="comments-list">
+              <!-- Comments injected here -->
+            </div>
+            <div class="add-comment">
+              <input type="text" id="comment-input" placeholder="Write a comment..." class="input-field">
+              <button id="submit-comment" class="btn-primary">Send</button>
+            </div>
+          </div>
+        </div>
+        <div class="task-detail-sidebar">
+          <div class="task-section">
+            <h4>Status</h4>
+            <select id="detail-task-status" class="input-field">
+              <option value="Todo">To Do</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Done">Done</option>
+            </select>
+          </div>
+          <div class="task-section">
+            <h4>Assignee</h4>
+            <p id="detail-task-assignee">Unassigned</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
