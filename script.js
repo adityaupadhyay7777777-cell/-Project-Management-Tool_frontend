@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:4000/api';
+const API_URL = 'https://project-management-tool-backend-si6w.onrender.com/api';
 let token = localStorage.getItem('token');
 let user = JSON.parse(localStorage.getItem('user'));
 let currentProject = null;
@@ -6,7 +6,7 @@ let currentTask = null;
 let users = [];
 
 // Socket.io
-const socket = io('http://localhost:4000');
+const socket = io('https://project-management-tool-backend-si6w.onrender.com');
 
 // Check Auth
 if (!token && window.location.pathname.includes('index.html')) {

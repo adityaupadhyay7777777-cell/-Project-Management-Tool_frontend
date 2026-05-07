@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +8,13 @@
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body class="auth-body">
   <div class="auth-container">
     <div class="auth-box glassmorphism">
       <h2 class="auth-title">Join Nexus</h2>
       <p class="auth-subtitle">Create an account to manage your projects</p>
-      
+
       <form id="register-form">
         <div class="form-group">
           <label>Username</label>
@@ -37,13 +39,13 @@
       const errorMsg = document.getElementById('error-msg');
 
       try {
-        const res = await fetch('http://localhost:4000/api/auth/register', {
+        const res = await fetch('https://project-management-tool-backend-si6w.onrender.com/api/auth/register', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username, password })
         });
         const data = await res.json();
-        
+
         if (res.ok) {
           localStorage.setItem('token', data.token);
           localStorage.setItem('user', JSON.stringify(data.user));
@@ -52,9 +54,11 @@
           errorMsg.textContent = data.error || 'Registration failed';
         }
       } catch (err) {
+        console.error('Registration Error:', err);
         errorMsg.textContent = 'Server error. Please try again.';
       }
     });
   </script>
 </body>
+
 </html>
