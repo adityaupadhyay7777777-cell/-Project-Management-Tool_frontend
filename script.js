@@ -9,14 +9,12 @@ let users = [];
 const socket = io('https://project-management-tool-backend-si6w.onrender.com');
 
 // Check Auth
-if (!token && window.location.pathname.includes('index.html')) {
+if (!token) {
   window.location.href = 'login.html';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (window.location.pathname.includes('index.html')) {
-    initApp();
-  }
+  initApp();
 });
 
 async function initApp() {
